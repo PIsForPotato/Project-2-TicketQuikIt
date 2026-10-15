@@ -69,7 +69,8 @@ public class Menu
                 Applicant newApplicant = new Applicant(firstName, lastName);
                 while (active)
                 {
-                    addApplicantToEventPrompt();
+                    Event event = addApplicantToEventPrompt();
+                    event.addApplicant(newApplicant);
                     active = redoActionPrompt();
                 }
                 mainMenuPrompt();
@@ -80,8 +81,9 @@ public class Menu
                 {
                     System.out.println(
                         "----------------------------------------------------------");
-                    int id  = idPrompt();
-                    LinkedChain<Event> eventChain = eventManager.checkApplicantsEvent(id);
+                    int id = idPrompt();
+                    LinkedChain<Event> eventChain =
+                        eventManager.checkApplicantsEvent(id);
                     System.out.println(eventChain.toString());
                     active = redoActionPrompt();
                 }
@@ -89,16 +91,34 @@ public class Menu
                 break;
 
             case 2:
-                while (active)
+                boolean delete = false;
+                System.out.println(
+                    "----------------------------------------------------------");
+                String title = eventTitlePrompt();
+                Event event = eventManager.findEvent(title);
+
+                if (event == null)
                 {
-                    System.out.println(
-                        "----------------------------------------------------------");
-                    eventTitlePrompt();
-                    
-                    Applicant[] ticketWinners = eventManager.getTicketWinners();
-                    
-                    
-                    active = deleteTicketWinnersPrompt();
+                    System.out.println("Please input a valid title.");
+                }
+                else
+                {
+                    Applicant[] ticketWinners = event.getTicketWinners();
+
+                    for (int i = 0; i < ticketWinners.length; i++)
+                    {
+                        System.out.println(
+                            "Winner #" + i + " is "
+                                + ticketWinners[i].getFirstName() + " "
+                                + ticketWinners[i].getlastName()
+                                + " with an ID of " + ticketWinners[i].getID());
+                    }
+
+                }
+                delete = deleteTicketWinnersPrompt();
+                if (!delete)
+                {
+                    event.deleteTicketWinners();
                 }
                 mainMenuPrompt();
                 break;
@@ -312,9 +332,11 @@ public class Menu
      * Prompts the user for an integer (0 to amount of events) where 0 is quit
      * and non-0 represents an event to add to.
      */
-    public void addApplicantToEventPrompt()
+    public Event addApplicantToEventPrompt()
     {
         int choice = -1;
+        Event[] eventList = eventManager.getEventList();
+        Event returnEvent = null;
 
         while (choice == -1)
         {
@@ -322,15 +344,21 @@ public class Menu
                 "----------------------------------------------------------\n"
                     + "Which event do you want to add to?\n" + "0 - Quit\n");
 
+            for (int i = 0; i < eventList.length; i++) {
+                System.out.println(i + " - " + eventList[i].getEventTitle());
+            }
             System.out.print("Enter choice: ");
 
             try
             {
                 choice = Integer.parseInt(scanner.nextLine());
-                if (choice != 0 && choice != 1)
+                if (choice < 0 || choice >= eventList.length)
                 {
                     System.out.println("Please input a valid integer.");
                     choice = -1;
+                }
+                else {
+                    returnEvent = eventList[choice];
                 }
             }
             catch (NumberFormatException e)
@@ -339,6 +367,8 @@ public class Menu
                 choice = -1;
             }
         }
+        
+        return returnEvent;
 
     }
 
@@ -383,7 +413,10 @@ public class Menu
      */
     public static void main(String[] args)
     {
-        Menu ticketQuikIt = new Menu();
+        Event[] eventArray = { new Event("Event 1", 10),
+            new Event("Event 2", 5), new Event("Event 3", 20)};
+        EventManager eventManager = new EventManager(eventArray);
+        Menu ticketQuikIt = new Menu(eventManager);
         ticketQuikIt.mainMenuPrompt();
     }
 }
