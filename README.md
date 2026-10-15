@@ -24,11 +24,17 @@ Changes for specification:
 - Redefine countApplicant(int id) to iterate through the LinkedChain instead of using count(T anEntry); this is to better use ID values
 - Add hashCode() to Event and Applicant class, aligning with overriden equals()
 - Add an EventManager object as a field for Menu
+
 Changes to LinkedChain class: As of the current version, LinkedChain has not been changed.
+
 Unknown Updates: The following unknowns have been addressed
 - globalID system (a public static int) resolves the incrementing ID feature of Applicant
 - A function can check through all event queues and identify specific individuals by keeping track of the events queues in an array and iterating through each individual event to search for an ID as needed
-A single Linked List can store and handle two different classes by using generics. 
+- A single Linked List can store and handle two different classes by using generics. 
+
+What Doesn't Work Yet:
+- The implementation of the stretch goal of clearance levels is still unknown.
+- Not available
 
 ## Next Steps
 - Not available
