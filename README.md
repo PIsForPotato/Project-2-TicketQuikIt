@@ -64,8 +64,8 @@ The following unknowns have been addressed
 | Menu | Alex Zhao | Wrote, revised, completed |
 | Applicant | Makayla Irwin | Wrote, revised, completed |
 | ApplicantTest | Makayla Irwin | Wrote, revised, completed |
-| Event | N/A | N/A |
-| EventTest | N/A | N/A |
+| Event | Lehiem Seyoum | Wrote, revised, completed |
+| EventTest | Lehiem Seyoum | Wrote, revised, completed |
 | EventManager | Alex Zhao | Wrote, revised, completed |
 | EventManagerTest | Alex Zhao | Wrote, revised, completed |
 | LinkedChain | CS 2114 Staff | Wrote, revised, completed |
