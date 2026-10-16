@@ -13,7 +13,7 @@ public class Event
     private int eventCapacity;
     private int security;
     private LinkedChain<Applicant> applicants;
-
+   
     /**
      * Constructs an Event with a title and a ticket capacity.
      *
@@ -21,6 +21,8 @@ public class Event
      *            the title of the event
      * @param eventCapacity
      *            the number of applicants who can win tickets
+     * @param security
+     *            the security level of the event
      */
     public Event(String eventTitle, int eventCapacity, int security)
     {
