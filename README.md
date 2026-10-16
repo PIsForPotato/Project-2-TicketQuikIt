@@ -78,10 +78,10 @@ Everything initially specified in our Minimum Viable Product (MVP) spec is funct
     -  Bad Input: Adding an Event with any invalid input in parameters (null/empty eventTitle; 0, negative, or non-int eventCapacity; 0, negative, or non-int security) does not create an Event object and, instead, informs the user of invalidity
   - getSecurity()
     - Normal Case: Returns Event's security level
-    - Bad Input: Returns null if security is invalid
+    - Bad Input: Invalid inputs are caught by menu validation processing before reaching getSecurity()
   - getClearance() 
     - Normal case: Returns Applicant's clearance level
-    - Bad Input: Returns null if clearance is invalid
+    - Bad Input: Invalid inputs are caught by menu validation processing before reaching getClearence()
   -   Event's addApplicant() require new test cases that account for clearance level.
     - Normal Case: Adding an Applicant with a clearance higher than an Event's security
     - Bad Input: Adding an Applicant with a clearance lower than an Event's security
