@@ -57,7 +57,7 @@ The following unknowns have been addressed
   - Clearance level is stored on Applicants and checked against a security level stored on Events before an Applicant is added to an Event.
 
 ### What Doesn't Work Yet
-Everything initially specified in our Minimum Viable Product (MVP) spec is functional. Outside of our MVP, the stretch goal of allowing the user to crete and manage new Event objects is unimplemented. There is currently no way for the user to edit Event objects at all via the main
+Everything initially specified in our Minimum Viable Product (MVP) spec is functional. Outside of our MVP, the stretch goal of allowing the user to create and manage new Event objects is unimplemented. There is currently no way for the user to edit Event objects at all via the main
 
 ## Next Steps
 - **What is left to finish the MVP? The remaining features and fixes, in the order you will do them.**
