@@ -75,6 +75,7 @@ public class ApplicantTest
     /**
      * Tests that globalID is always the next ID to be assigned.
      */
+    @SuppressWarnings("unused")
     public void testGlobalId()
     {
         assertEquals(2, Applicant.globalID);
@@ -120,6 +121,7 @@ public class ApplicantTest
     /**
      * Tests equals against an object of a different class.
      */
+    @SuppressWarnings("unlikely-arg-type")
     public void testEqualsDifferentClass()
     {
         assertFalse(first.equals("Ada Lovelace"));

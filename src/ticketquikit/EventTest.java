@@ -20,10 +20,11 @@ public class EventTest extends TestCase
      */
     public void setUp()
     {
+        Applicant.globalID = 0;
         event = new Event("Concert", 2);
-        applicant1 = new Applicant("John", "Smith", 101);
-        applicant2 = new Applicant("Jane", "Doe", 102);
-        applicant3 = new Applicant("Alex", "Brown", 103);
+        applicant1 = new Applicant("John", "Smith", 1);
+        applicant2 = new Applicant("Jane", "Doe", 1);
+        applicant3 = new Applicant("Alex", "Brown", 1);
     }
 
 
@@ -47,10 +48,11 @@ public class EventTest extends TestCase
     public void testAddApplicant()
     {
         assertTrue(event.addApplicant(applicant1));
+        assertTrue(event.addApplicant(applicant1));
         assertTrue(event.addApplicant(applicant2));
 
-        assertEquals(2, event.countApplicant(101));
-        assertEquals(1, event.countApplicant(102));
+        assertEquals(2, event.countApplicant(0));
+        assertEquals(1, event.countApplicant(1));
     }
 
 
@@ -71,9 +73,9 @@ public class EventTest extends TestCase
         assertSame(applicant2, winners[1]);
 
         // Getting winners should not remove applicants.
-        assertEquals(1, event.countApplicant(101));
-        assertEquals(1, event.countApplicant(102));
-        assertEquals(1, event.countApplicant(103));
+        assertEquals(1, event.countApplicant(0));
+        assertEquals(1, event.countApplicant(1));
+        assertEquals(1, event.countApplicant(2));
     }
 
 
@@ -116,11 +118,11 @@ public class EventTest extends TestCase
         assertTrue(event.deleteTicketWinners());
 
         // The first two applicants should have been removed.
-        assertEquals(0, event.countApplicant(101));
-        assertEquals(0, event.countApplicant(102));
+        assertEquals(0, event.countApplicant(0));
+        assertEquals(0, event.countApplicant(1));
 
         // The third applicant should remain.
-        assertEquals(1, event.countApplicant(103));
+        assertEquals(1, event.countApplicant(2));
 
         Applicant[] winners = event.getTicketWinners();
         assertEquals(1, winners.length);
@@ -160,9 +162,9 @@ public class EventTest extends TestCase
         event.addApplicant(applicant2);
         event.addApplicant(applicant3);
 
-        assertEquals(1, event.countApplicant(101));
-        assertEquals(1, event.countApplicant(102));
-        assertEquals(1, event.countApplicant(103));
+        assertEquals(1, event.countApplicant(0));
+        assertEquals(1, event.countApplicant(1));
+        assertEquals(1, event.countApplicant(2));
 
         // An ID that does not exist should return zero.
         assertEquals(0, event.countApplicant(999));
@@ -174,13 +176,14 @@ public class EventTest extends TestCase
      */
     public void testCountDuplicateApplicantIDs()
     {
-        Applicant duplicate = new Applicant("John", "Smith", 101);
+        Applicant.globalID = 0;
+        Applicant duplicate = new Applicant("John", "Smith", 1);
 
         event.addApplicant(applicant1);
         event.addApplicant(duplicate);
         event.addApplicant(applicant2);
 
-        assertEquals(2, event.countApplicant(101));
+        assertEquals(2, event.countApplicant(0));
     }
 
 
@@ -228,6 +231,7 @@ public class EventTest extends TestCase
     /**
      * Tests equals when comparing an event with another class.
      */
+    @SuppressWarnings("unlikely-arg-type")
     public void testEqualsDifferentClass()
     {
         assertFalse(event.equals("Concert"));

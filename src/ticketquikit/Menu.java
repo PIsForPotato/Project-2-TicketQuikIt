@@ -32,7 +32,7 @@ public class Menu
     // ~Private Methods ........................................................
     private void addApplicantProcess()
     {
-        boolean active = false;
+        boolean active = true;
         System.out.println(
             "----------------------------------------------------------");
         String firstName = firstNamePrompt();
@@ -42,23 +42,40 @@ public class Menu
         while (active)
         {
             Event event = addApplicantToEventPrompt();
-            event.addApplicant(newApplicant);
-            active = redoActionPrompt();
+            if (event != null)
+            {
+                event.addApplicant(newApplicant);
+                active = redoActionPrompt();
+            }
+            else
+            {
+                active = false;
+            }
         }
     }
 
 
     private void checkApplicantProcess()
     {
-        boolean active = false;
+        boolean active = true;
         while (active)
         {
             System.out.println(
                 "----------------------------------------------------------");
             int id = idPrompt();
-            LinkedChain<Event> eventChain =
-                eventManager.checkApplicantsEvent(id);
-            System.out.println(eventChain.toString());
+            
+            if (id != -1) {
+                LinkedChain<Event> eventChain =
+                    eventManager.checkApplicantsEvent(id);
+                
+                String chainString = eventChain.toString();
+                if (chainString.equals("[]")) {
+                    System.out.println("This Applicant is not in any queue!");
+                }
+                else {
+                    System.out.println(chainString);
+                }
+            }
             active = redoActionPrompt();
         }
     }
@@ -67,32 +84,42 @@ public class Menu
     private void distributeTicketsProcess()
     {
         boolean delete = false;
-        System.out.println(
-            "----------------------------------------------------------");
-        String title = eventTitlePrompt();
-        Event event = eventManager.findEvent(title);
-
-        if (event == null)
-        {
-            System.out.println("Please input a valid title.");
-        }
-        else
-        {
-            Applicant[] ticketWinners = event.getTicketWinners();
-
-            for (int i = 0; i < ticketWinners.length; i++)
+        Event event = null;
+        
+        while (event==null) {
+            System.out.println(
+                "----------------------------------------------------------");
+            String title = eventTitlePrompt();
+            event = eventManager.findEvent(title);
+    
+            if (event == null)
             {
-                System.out.println(
-                    "Winner #" + i + " is " + ticketWinners[i].getFirstName()
-                        + " " + ticketWinners[i].getLastName()
-                        + " with an ID of " + ticketWinners[i].getID());
+                System.out.println("Please input a valid title.");
             }
+            else
+            {
+                Applicant[] ticketWinners = event.getTicketWinners();
+                
+                if (ticketWinners.length==0) {
+                    System.out.println("No Winners!");
+                }
+                else {
+                    for (int i = 0; i < ticketWinners.length; i++)
+                    {
+                        System.out.println(
+                            "Winner #" + (i+1) + " is " + ticketWinners[i].getFirstName()
+                                + " " + ticketWinners[i].getLastName()
+                                + " with an ID of " + ticketWinners[i].getID());
+                    }
+                }
 
-        }
-        delete = deleteTicketWinnersPrompt();
-        if (!delete)
-        {
-            event.deleteTicketWinners();
+    
+                delete = deleteTicketWinnersPrompt();
+                if (delete)
+                {
+                    event.deleteTicketWinners();
+                }
+            }
         }
     }
 
@@ -240,6 +267,7 @@ public class Menu
         return eventTitle;
     }
 
+
     // ----------------------------------------------------------
     /**
      * Prompts the user for a clearance level
@@ -250,12 +278,9 @@ public class Menu
     {
         int clearance = -1;
 
-        while (clearance == -1 )
+        while (clearance == -1)
         {
-            System.out.println(
-                "----------------------------------------------------------\nThe most recent ID was "
-                    + (Applicant.globalID - 1));
-            System.out.print("Enter ID: ");
+            System.out.print("Enter clearance level: ");
 
             try
             {
@@ -275,6 +300,7 @@ public class Menu
         return clearance;
     }
 
+
     // ----------------------------------------------------------
     /**
      * Prompts the user for a integer id that must be 0<=id<Applicant.globalID
@@ -287,9 +313,8 @@ public class Menu
 
         while (id == -1 && Applicant.globalID != 0)
         {
-            System.out.println(
-                "----------------------------------------------------------\nThe most recent ID was "
-                    + (Applicant.globalID - 1));
+            System.out
+                .println("The most recent ID was " + (Applicant.globalID - 1));
             System.out.print("Enter ID: ");
 
             try
@@ -399,6 +424,8 @@ public class Menu
     /**
      * Prompts the user for an integer (0 to amount of events) where 0 is quit
      * and non-0 represents an event to add to.
+     * 
+     * @return Event selected via prompt.
      */
     public Event addApplicantToEventPrompt()
     {
@@ -410,25 +437,32 @@ public class Menu
         {
             System.out.println(
                 "----------------------------------------------------------\n"
-                    + "Which event do you want to add to?\n" + "0 - Quit\n");
+                    + "Which event do you want to add to?\n" + "0 - Quit");
 
             for (int i = 0; i < eventList.length; i++)
             {
-                System.out.println(i + " - " + eventList[i].getEventTitle());
+                System.out
+                    .println(i + 1 + " - " + eventList[i].getEventTitle());
             }
             System.out.print("Enter choice: ");
 
             try
             {
                 choice = Integer.parseInt(scanner.nextLine());
-                if (choice < 0 || choice >= eventList.length)
+                if (choice < 0 || choice > eventList.length)
                 {
                     System.out.println("Please input a valid integer.");
                     choice = -1;
                 }
+                else if (choice == 0)
+                {
+                    return null;
+                }
                 else
                 {
-                    returnEvent = eventList[choice];
+                    returnEvent = eventList[choice - 1];
+                    System.out.println(
+                        "Adding applicant to " + returnEvent.getEventTitle());
                 }
             }
             catch (NumberFormatException e)
@@ -463,8 +497,8 @@ public class Menu
      */
     public static void main(String[] args)
     {
-        Event[] eventArray = { new Event("Event 1", 10),
-            new Event("Event 2", 5), new Event("Event 3", 20) };
+        Event[] eventArray = { new Event("Event 1", 1),
+            new Event("Event 2", 5), new Event("Event 3", 10) };
         EventManager eventManager = new EventManager(eventArray);
         Menu ticketQuikIt = new Menu(eventManager);
         ticketQuikIt.mainMenuPrompt();

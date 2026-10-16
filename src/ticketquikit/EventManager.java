@@ -47,7 +47,6 @@ public class EventManager
      */
     public Event findEvent(String title)
     {
-        Event event;
         for (int i = 0; i < eventList.length; i++)
         {
             if (eventList[i].getEventTitle().equals(title))

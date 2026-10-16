@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Represents an event that applicants can enter to receive tickets.
- * Stores the event's title, ticket capacity, and list of applicants.
+ * Represents an event that applicants can enter to receive tickets. Stores the
+ * event's title, ticket capacity, and list of applicants.
  */
 public class Event
 {
@@ -16,8 +16,10 @@ public class Event
     /**
      * Constructs an Event with a title and a ticket capacity.
      *
-     * @param eventTitle the title of the event
-     * @param eventCapacity the number of applicants who can win tickets
+     * @param eventTitle
+     *            the title of the event
+     * @param eventCapacity
+     *            the number of applicants who can win tickets
      */
     public Event(String eventTitle, int eventCapacity)
     {
@@ -27,6 +29,7 @@ public class Event
         // Creates an empty linked chain to store applicants in order.
         applicants = new LinkedChain<Applicant>();
     }
+
 
     /**
      * Returns the title of the event.
@@ -38,6 +41,7 @@ public class Event
         return eventTitle;
     }
 
+
     /**
      * Returns the maximum number of ticket winners for the event.
      *
@@ -48,10 +52,12 @@ public class Event
         return eventCapacity;
     }
 
+
     /**
      * Adds an applicant to the end of the applicant list.
      *
-     * @param applicant the applicant being added
+     * @param applicant
+     *            the applicant being added
      * @return true if the applicant was added successfully
      */
     public boolean addApplicant(Applicant applicant)
@@ -60,10 +66,11 @@ public class Event
         return applicants.addToEnd(applicant);
     }
 
+
     /**
-     * Returns an array containing the ticket winners for this event.
-     * Winners are the first applicants in the linked chain, up to
-     * the event's ticket capacity.
+     * Returns an array containing the ticket winners for this event. Winners
+     * are the first applicants in the linked chain, up to the event's ticket
+     * capacity.
      *
      * @return an array containing the ticket winners
      */
@@ -71,7 +78,7 @@ public class Event
     {
         // Converts the entire linked chain into an array.
         Applicant[] allApplicants =
-            applicants.toArray(new Applicant[0]);
+            applicants.toArray(new Applicant[applicants.size()]);
 
         // The number of winners cannot exceed the capacity or the
         // number of applicants who entered the event.
@@ -81,6 +88,7 @@ public class Event
         // The original applicant list remains unchanged.
         return Arrays.copyOf(allApplicants, winnerCount);
     }
+
 
     /**
      * Removes the first eventCapacity applicants from the applicant list.
@@ -109,11 +117,13 @@ public class Event
         return true;
     }
 
+
     /**
-     * Counts how many times an applicant with the specified ID
-     * appears in the applicant list.
+     * Counts how many times an applicant with the specified ID appears in the
+     * applicant list.
      *
-     * @param id the ID number being searched for
+     * @param id
+     *            the ID number being searched for
      * @return the number of matching applicants
      */
     public int countApplicant(int id)
@@ -122,7 +132,7 @@ public class Event
 
         // Converts the linked chain into an array so it can be traversed.
         Applicant[] allApplicants =
-            applicants.toArray(new Applicant[0]);
+            applicants.toArray(new Applicant[applicants.size()]);
 
         // Checks every applicant in the array.
         for (Applicant applicant : allApplicants)
@@ -138,11 +148,13 @@ public class Event
         return count;
     }
 
+
     /**
-     * Checks whether two Event objects are equal.
-     * Two events are considered equal if they have the same title.
+     * Checks whether two Event objects are equal. Two events are considered
+     * equal if they have the same title.
      *
-     * @param obj the object being compared to this event
+     * @param obj
+     *            the object being compared to this event
      * @return true if both events have the same title; false otherwise
      */
     @Override
@@ -167,9 +179,10 @@ public class Event
         return Objects.equals(eventTitle, other.eventTitle);
     }
 
+
     /**
-     * Generates a hash code based on the event title.
-     * Uses the same field as equals() to keep the methods consistent.
+     * Generates a hash code based on the event title. Uses the same field as
+     * equals() to keep the methods consistent.
      *
      * @return the hash code for this event
      */
@@ -177,5 +190,17 @@ public class Event
     public int hashCode()
     {
         return Objects.hash(eventTitle);
+    }
+    
+    // ----------------------------------------------------------
+    /**
+     * Describes the Event.
+     * 
+     * @return a string with the Event's title and carrying capacity
+     */
+    @Override
+    public String toString()
+    {
+        return eventTitle + " (Event Capacity: " + eventCapacity + ")";
     }
 }

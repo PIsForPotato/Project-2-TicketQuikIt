@@ -55,12 +55,13 @@ public class EventManagerTest
     /**
      * Tests checkApplicants
      */
+    @SuppressWarnings("unused")
     public void testCheckApplicantsEvent() {
         Applicant.globalID = 0;
         for (int i = 0; i < 2; i++) {
-            new Applicant("John", "Doe");
+            new Applicant("John", "Doe", 1);
         }
-        Applicant applicant3 = new Applicant("John", "Doe");
+        Applicant applicant3 = new Applicant("John", "Doe", 1);
         eventArray[0].addApplicant(applicant3);
         eventArray[1].addApplicant(applicant3);
         
