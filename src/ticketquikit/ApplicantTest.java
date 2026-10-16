@@ -190,5 +190,6 @@ public class ApplicantTest
     {
         assertEquals("Ada Lovelace (ID: 0)", first.toString());
         assertEquals("Alan Turing (ID: 1)", second.toString());
+        assertEquals("null null (ID: 0)", evil.toString());
     }
 }

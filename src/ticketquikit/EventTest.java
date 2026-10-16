@@ -258,4 +258,16 @@ public class EventTest extends TestCase
 
         assertFalse(event.hashCode() == anotherEvent.hashCode());
     }
+
+    // ----------------------------------------------------------
+    /**
+     * Tests toString.
+     */
+    public void testToString()
+    {
+        assertEquals("Concert (Event Capacity: 2)", event.toString());
+        Event nullEvent = new Event(null, 0, 1);
+        assertEquals("null (Event Capacity: 0)", nullEvent.toString());
+
+    }
 }
