@@ -79,16 +79,12 @@ Everything initially specified in our Minimum Viable Product (MVP) spec is funct
   - getSecurity()
     - Normal Case: Returns Event's security level
     - Bad Input: Invalid inputs are caught by menu validation processing before reaching getSecurity()
-  - getClearance() 
-    - Normal case: Returns Applicant's clearance level
-    - Bad Input: Invalid inputs are caught by menu validation processing before reaching getClearence()
-  -   Event's addApplicant() require new test cases that account for clearance level.
+  - Event's addApplicant() require new test cases that account for clearance level.
     - Normal Case: Adding an Applicant with a clearance higher than an Event's security
     - Bad Input: Adding an Applicant with a clearance lower than an Event's security
 - **Who does what? Which team member owns each remaining item.**
-  - Clearance level testing: Makayla Irwin
+  - Clearance level and event adding testing: Makayla Irwin, Nandini Duggaraju
   - Event adding implementation: Alex Zhao, Lehiem Seyoum
-  - Event adding testing: Nandini Duggaraju
 
 ## Attribution Table 
 | Class | Contributor(s) | Contribution |
