@@ -57,10 +57,38 @@ The following unknowns have been addressed
   - Clearance level is stored on Applicants and checked against a security level stored on Events before an Applicant is added to an Event.
 
 ### What Doesn't Work Yet
-Everything initially specified in our MVP spec is functional. Outside of our MVP, the stretch goal of allowing the user to crete and manage new Event objects is unimplemented. 
+Everything initially specified in our Minimum Viable Product (MVP) spec is functional. Outside of our MVP, the stretch goal of allowing the user to crete and manage new Event objects is unimplemented. There is currently no way for the user to edit Event objects at all via the main
 
 ## Next Steps
-- Not available
+- **What is left to finish the MVP? The remaining features and fixes, in the order you will do them.**
+  - The MVP is currently finished. All methods and features listed in the spec and scope function. 
+- **Which stretch goals will you attempt? The ones from your scope you are committing to, and the ones you are dropping.**
+  - Provide the user the ability to manually add new Events
+    - Committed; not implemented yet
+    - Will require new Menu processes and prompting
+      - public void addEventProcess(String eventTitle, int eventCapacity, int security)
+      - private int eventCapacityPrompt()
+    - EventManager requires a new method to add Events
+  - Clearance Level
+    - Committed; functionally implemented
+    - Although it works functionally, it is missing test cases
+- **What new tests will you need? The methods and bad-input cases the added work must cover.**
+  - addEventProcess()
+    -  Normal Case: Adding an Event with valid inputs in each parameter creates a valid Event that can be accessed via other menu options
+    -  Bad Input: Adding an Event with any invalid input in parameters (null/empty eventTitle; 0, negative, or non-int eventCapacity; 0, negative, or non-int security) does not create an Event object and, instead, informs the user of invalidity
+  - getSecurity()
+    - Normal Case: Returns Event's security level
+    - Bad Input: Returns null if security is invalid
+  - getClearance() 
+    - Normal case: Returns Applicant's clearance level
+    - Bad Input: Returns null if clearance is invalid
+  -   Event's addApplicant() require new test cases that account for clearance level.
+    -   Normal Case: Adding an Applicant with a clearance higher than an Event's security
+    -   Bad Input: Adding an Applicant with a clearance lower than an Event's security
+- **Who does what? Which team member owns each remaining item.**
+  - Clearance level testing: Makayla Irwin
+  - Event adding implementation: Alex Zhao, Lehiem Seyoum
+  - Event adding testing: Nandini Duggaraju
 
 ## Attribution Table 
 | Class | Contributor(s) | Contribution |
@@ -73,7 +101,7 @@ Everything initially specified in our MVP spec is functional. Outside of our MVP
 | EventManager | Alex Zhao | Wrote, revised, completed |
 | EventManagerTest | Alex Zhao | Wrote, revised, completed |
 | LinkedChain | CS 2114 Staff | Wrote, revised, completed |
-| LinkedChainTest | N/A | N/A |
+| LinkedChainTest | Nandini Duggaraju | Wrote, revised, completed |
 
 **GenAI Note**: As of the current version, GenAI has not been used. 
 
