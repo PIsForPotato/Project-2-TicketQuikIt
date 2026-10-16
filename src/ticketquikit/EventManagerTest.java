@@ -15,8 +15,8 @@ public class EventManagerTest
 {
     private EventManager manager;
     private EventManager emptyManager;
-    private Event[] eventArray = { new Event("Event 1", 10),
-        new Event("Event 2", 5), new Event("Event 3", 20) };
+    private Event[] eventArray = { new Event("Event 1", 1, 1),
+        new Event("Event 2", 5, 1), new Event("Event 3", 10, 3) };
 
     // ----------------------------------------------------------
     /**

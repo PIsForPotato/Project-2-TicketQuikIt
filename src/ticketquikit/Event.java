@@ -11,6 +11,7 @@ public class Event
 {
     private String eventTitle;
     private int eventCapacity;
+    private int security;
     private LinkedChain<Applicant> applicants;
 
     /**
@@ -21,10 +22,11 @@ public class Event
      * @param eventCapacity
      *            the number of applicants who can win tickets
      */
-    public Event(String eventTitle, int eventCapacity)
+    public Event(String eventTitle, int eventCapacity, int security)
     {
         this.eventTitle = eventTitle;
         this.eventCapacity = eventCapacity;
+        this.security = security;
 
         // Creates an empty linked chain to store applicants in order.
         applicants = new LinkedChain<Applicant>();
@@ -54,6 +56,17 @@ public class Event
 
 
     /**
+     * Returns the security level for the event.
+     *
+     * @return the event security
+     */
+    public int getSecurity()
+    {
+        return security;
+    }
+
+
+    /**
      * Adds an applicant to the end of the applicant list.
      *
      * @param applicant
@@ -63,7 +76,13 @@ public class Event
     public boolean addApplicant(Applicant applicant)
     {
         // Adding to the end preserves the first-come, first-served order.
-        return applicants.addToEnd(applicant);
+        if (applicant.getClearance() >= security)
+        {
+            return applicants.addToEnd(applicant);
+        }
+        System.out
+            .println("Failed to add this Applicant; clearance too low.");
+        return false;
     }
 
 
@@ -191,7 +210,8 @@ public class Event
     {
         return Objects.hash(eventTitle);
     }
-    
+
+
     // ----------------------------------------------------------
     /**
      * Describes the Event.

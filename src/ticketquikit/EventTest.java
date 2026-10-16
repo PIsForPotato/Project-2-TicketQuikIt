@@ -21,7 +21,7 @@ public class EventTest extends TestCase
     public void setUp()
     {
         Applicant.globalID = 0;
-        event = new Event("Concert", 2);
+        event = new Event("Concert", 2, 1);
         applicant1 = new Applicant("John", "Smith", 1);
         applicant2 = new Applicant("Jane", "Doe", 1);
         applicant3 = new Applicant("Alex", "Brown", 1);
@@ -36,7 +36,7 @@ public class EventTest extends TestCase
         assertEquals("Concert", event.getEventTitle());
         assertEquals(2, event.getEventCapacity());
 
-        Event anotherEvent = new Event("Festival", 5);
+        Event anotherEvent = new Event("Festival", 5, 1);
         assertEquals("Festival", anotherEvent.getEventTitle());
         assertEquals(5, anotherEvent.getEventCapacity());
     }
@@ -139,7 +139,7 @@ public class EventTest extends TestCase
         event.addApplicant(applicant1);
 
         assertTrue(event.deleteTicketWinners());
-        assertEquals(0, event.countApplicant(101));
+        assertEquals(0, event.countApplicant(0));
         assertTrue(event.getTicketWinners().length == 0);
     }
 
@@ -201,7 +201,7 @@ public class EventTest extends TestCase
      */
     public void testEqualsSameTitle()
     {
-        Event anotherEvent = new Event("Concert", 10);
+        Event anotherEvent = new Event("Concert", 10, 1);
 
         assertTrue(event.equals(anotherEvent));
         assertTrue(anotherEvent.equals(event));
@@ -213,7 +213,7 @@ public class EventTest extends TestCase
      */
     public void testEqualsDifferentTitle()
     {
-        Event anotherEvent = new Event("Festival", 2);
+        Event anotherEvent = new Event("Festival", 2, 1);
 
         assertFalse(event.equals(anotherEvent));
     }
@@ -243,7 +243,7 @@ public class EventTest extends TestCase
      */
     public void testHashCodeSameTitle()
     {
-        Event anotherEvent = new Event("Concert", 10);
+        Event anotherEvent = new Event("Concert", 10, 1);
 
         assertEquals(event.hashCode(), anotherEvent.hashCode());
     }
@@ -254,7 +254,7 @@ public class EventTest extends TestCase
      */
     public void testHashCodeDifferentTitle()
     {
-        Event anotherEvent = new Event("Festival", 2);
+        Event anotherEvent = new Event("Festival", 2, 1);
 
         assertFalse(event.hashCode() == anotherEvent.hashCode());
     }
