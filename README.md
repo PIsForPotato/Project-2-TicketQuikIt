@@ -97,9 +97,9 @@ Everything initially specified in our Minimum Viable Product (MVP) spec is funct
 | Applicant | Makayla Irwin | Wrote, revised, completed |
 | ApplicantTest | Makayla Irwin | Wrote, revised, completed, GenAI-assisted |
 | Event | Lehiem Seyoum | Wrote, revised, completed |
-| EventTest | Lehiem Seyoum | Wrote, revised, completed |
+| EventTest | Lehiem Seyoum | Wrote, revised, completed, GenAI-assisted |
 | EventManager | Alex Zhao | Wrote, revised, completed |
-| EventManagerTest | Alex Zhao | Wrote, revised, completed, GenAI-assisted |
+| EventManagerTest | Alex Zhao | Wrote, revised, completed |
 | LinkedChain | CS 2114 Staff | Wrote, revised, completed |
 | LinkedChainTest | Nandini Duggaraju | Wrote, revised, completed, GenAI-assisted |
 
