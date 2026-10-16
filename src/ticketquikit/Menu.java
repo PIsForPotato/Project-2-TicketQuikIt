@@ -29,6 +29,88 @@ public class Menu
     }
 
 
+    // ~Private Methods ........................................................
+    private void addApplicantProcess()
+    {
+        boolean active = false;
+        System.out.println(
+            "----------------------------------------------------------");
+        String firstName = firstNamePrompt();
+        String lastName = lastNamePrompt();
+        int clearance = clearanceLevelPrompt();
+        Applicant newApplicant = new Applicant(firstName, lastName, clearance);
+        while (active)
+        {
+            Event event = addApplicantToEventPrompt();
+            event.addApplicant(newApplicant);
+            active = redoActionPrompt();
+        }
+    }
+
+
+    private void checkApplicantProcess()
+    {
+        boolean active = false;
+        while (active)
+        {
+            System.out.println(
+                "----------------------------------------------------------");
+            int id = idPrompt();
+            LinkedChain<Event> eventChain =
+                eventManager.checkApplicantsEvent(id);
+            System.out.println(eventChain.toString());
+            active = redoActionPrompt();
+        }
+    }
+
+
+    private void distributeTicketsProcess()
+    {
+        boolean delete = false;
+        System.out.println(
+            "----------------------------------------------------------");
+        String title = eventTitlePrompt();
+        Event event = eventManager.findEvent(title);
+
+        if (event == null)
+        {
+            System.out.println("Please input a valid title.");
+        }
+        else
+        {
+            Applicant[] ticketWinners = event.getTicketWinners();
+
+            for (int i = 0; i < ticketWinners.length; i++)
+            {
+                System.out.println(
+                    "Winner #" + i + " is " + ticketWinners[i].getFirstName()
+                        + " " + ticketWinners[i].getLastName()
+                        + " with an ID of " + ticketWinners[i].getID());
+            }
+
+        }
+        delete = deleteTicketWinnersPrompt();
+        if (!delete)
+        {
+            event.deleteTicketWinners();
+        }
+    }
+
+
+    private boolean isNumeric(String input)
+    {
+        try
+        {
+            Double.parseDouble(input);
+            return true;
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+    }
+
+
     // ~Public Methods ........................................................
     /**
      * Place a description of your method here.
@@ -58,68 +140,20 @@ public class Menu
 
         }
 
-        boolean active = true;
         switch (choice)
         {
             case 0:
-                System.out.println(
-                    "----------------------------------------------------------");
-                String firstName = firstNamePrompt();
-                String lastname = lastNamePrompt();
-                Applicant newApplicant = new Applicant(firstName, lastName);
-                while (active)
-                {
-                    Event event = addApplicantToEventPrompt();
-                    event.addApplicant(newApplicant);
-                    active = redoActionPrompt();
-                }
+                addApplicantProcess();
                 mainMenuPrompt();
                 break;
 
             case 1:
-                while (active)
-                {
-                    System.out.println(
-                        "----------------------------------------------------------");
-                    int id = idPrompt();
-                    LinkedChain<Event> eventChain =
-                        eventManager.checkApplicantsEvent(id);
-                    System.out.println(eventChain.toString());
-                    active = redoActionPrompt();
-                }
+                checkApplicantProcess();
                 mainMenuPrompt();
                 break;
 
             case 2:
-                boolean delete = false;
-                System.out.println(
-                    "----------------------------------------------------------");
-                String title = eventTitlePrompt();
-                Event event = eventManager.findEvent(title);
-
-                if (event == null)
-                {
-                    System.out.println("Please input a valid title.");
-                }
-                else
-                {
-                    Applicant[] ticketWinners = event.getTicketWinners();
-
-                    for (int i = 0; i < ticketWinners.length; i++)
-                    {
-                        System.out.println(
-                            "Winner #" + i + " is "
-                                + ticketWinners[i].getFirstName() + " "
-                                + ticketWinners[i].getlastName()
-                                + " with an ID of " + ticketWinners[i].getID());
-                    }
-
-                }
-                delete = deleteTicketWinnersPrompt();
-                if (!delete)
-                {
-                    event.deleteTicketWinners();
-                }
+                distributeTicketsProcess();
                 mainMenuPrompt();
                 break;
 
@@ -206,6 +240,40 @@ public class Menu
         return eventTitle;
     }
 
+    // ----------------------------------------------------------
+    /**
+     * Prompts the user for a clearance level
+     * 
+     * @return int of clearance level
+     */
+    public int clearanceLevelPrompt()
+    {
+        int clearance = -1;
+
+        while (clearance == -1 )
+        {
+            System.out.println(
+                "----------------------------------------------------------\nThe most recent ID was "
+                    + (Applicant.globalID - 1));
+            System.out.print("Enter ID: ");
+
+            try
+            {
+                clearance = Integer.parseInt(scanner.nextLine());
+                if (0 > clearance)
+                {
+                    System.out.println("Please input a valid clearance level.");
+                    clearance = -1;
+                }
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Please input a valid clearance level.");
+            }
+        }
+
+        return clearance;
+    }
 
     // ----------------------------------------------------------
     /**
@@ -344,7 +412,8 @@ public class Menu
                 "----------------------------------------------------------\n"
                     + "Which event do you want to add to?\n" + "0 - Quit\n");
 
-            for (int i = 0; i < eventList.length; i++) {
+            for (int i = 0; i < eventList.length; i++)
+            {
                 System.out.println(i + " - " + eventList[i].getEventTitle());
             }
             System.out.print("Enter choice: ");
@@ -357,7 +426,8 @@ public class Menu
                     System.out.println("Please input a valid integer.");
                     choice = -1;
                 }
-                else {
+                else
+                {
                     returnEvent = eventList[choice];
                 }
             }
@@ -367,7 +437,7 @@ public class Menu
                 choice = -1;
             }
         }
-        
+
         return returnEvent;
 
     }
@@ -387,26 +457,6 @@ public class Menu
 
     // ----------------------------------------------------------
     /**
-     * Checks if a string is numeric
-     * 
-     * @return true is String is numeric
-     */
-    private boolean isNumeric(String input)
-    {
-        try
-        {
-            Double.parseDouble(input);
-            return true;
-        }
-        catch (NumberFormatException e)
-        {
-            return false;
-        }
-    }
-
-
-    // ----------------------------------------------------------
-    /**
      * Runs the main loop
      * 
      * @param args
@@ -414,7 +464,7 @@ public class Menu
     public static void main(String[] args)
     {
         Event[] eventArray = { new Event("Event 1", 10),
-            new Event("Event 2", 5), new Event("Event 3", 20)};
+            new Event("Event 2", 5), new Event("Event 3", 20) };
         EventManager eventManager = new EventManager(eventArray);
         Menu ticketQuikIt = new Menu(eventManager);
         ticketQuikIt.mainMenuPrompt();

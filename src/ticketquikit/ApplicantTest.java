@@ -13,6 +13,7 @@ public class ApplicantTest
     extends TestCase
 {
     // ~ Fields ................................................................
+    private Applicant evil;
     private Applicant first;
     private Applicant second;
 
@@ -24,8 +25,10 @@ public class ApplicantTest
     public void setUp()
     {
         Applicant.globalID = 0;
-        first = new Applicant("Ada", "Lovelace");
-        second = new Applicant("Alan", "Turing");
+        evil = new Applicant(null, null, 1);
+        Applicant.globalID = 0;
+        first = new Applicant("Ada", "Lovelace", 1);
+        second = new Applicant("Alan", "Turing", 5);
     }
 
 
@@ -39,6 +42,18 @@ public class ApplicantTest
         assertEquals("Lovelace", first.getLastName());
         assertEquals("Alan", second.getFirstName());
         assertEquals("Turing", second.getLastName());
+        assertEquals(null, evil.getFirstName());
+        assertEquals(null, evil.getLastName());
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the clearance getter.
+     */
+    public void testGetClearance()
+    {
+        assertEquals(1, first.getClearance());
+        assertEquals(5, second.getClearance());
     }
 
 
@@ -51,7 +66,7 @@ public class ApplicantTest
         assertEquals(0, first.getID());
         assertEquals(1, second.getID());
 
-        Applicant third = new Applicant("Grace", "Hopper");
+        Applicant third = new Applicant("Grace", "Hopper", 1);
         assertEquals(2, third.getID());
     }
 
@@ -63,7 +78,7 @@ public class ApplicantTest
     public void testGlobalId()
     {
         assertEquals(2, Applicant.globalID);
-        new Applicant("Grace", "Hopper");
+        new Applicant("Grace", "Hopper", 1);
         assertEquals(3, Applicant.globalID);
     }
 
@@ -75,7 +90,7 @@ public class ApplicantTest
     public void testGlobalIdReset()
     {
         Applicant.globalID = 0;
-        Applicant fresh = new Applicant("Linus", "Torvalds");
+        Applicant fresh = new Applicant("Linus", "Torvalds", 1);
         assertEquals(0, fresh.getID());
         assertEquals(1, Applicant.globalID);
     }
@@ -130,7 +145,7 @@ public class ApplicantTest
      */
     public void testEqualsSameNameDifferentId()
     {
-        Applicant twin = new Applicant("Ada", "Lovelace");
+        Applicant twin = new Applicant("Ada", "Lovelace", 1);
         assertFalse(first.equals(twin));
         assertFalse(twin.equals(first));
     }
@@ -144,7 +159,7 @@ public class ApplicantTest
     public void testEqualsSameIdDifferentName()
     {
         Applicant.globalID = 0;
-        Applicant sameId = new Applicant("Someone", "Else");
+        Applicant sameId = new Applicant("Someone", "Else", 1);
         assertEquals(first.getID(), sameId.getID());
         assertTrue(first.equals(sameId));
         assertTrue(sameId.equals(first));

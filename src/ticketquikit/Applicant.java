@@ -18,6 +18,7 @@ public class Applicant
     public static int globalID = 0;
 
     private final int id;
+    private int clearance;
     private String firstName;
     private String lastName;
 
@@ -29,11 +30,14 @@ public class Applicant
      *            the applicant's first name
      * @param lastName
      *            the applicant's last name
+     * @param clearance
+     *            the applciant's clearance ;eve;
      */
-    public Applicant(String firstName, String lastName)
+    public Applicant(String firstName, String lastName, int clearance)
     {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.clearance = clearance;
         this.id = globalID;
         globalID++;
     }
@@ -72,6 +76,18 @@ public class Applicant
     public String getLastName()
     {
         return lastName;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Get the applicant's clearance.
+     * 
+     * @return clearance
+     */
+    public int getClearance()
+    {
+        return clearance;
     }
 
 
