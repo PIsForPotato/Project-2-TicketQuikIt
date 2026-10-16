@@ -63,7 +63,6 @@ public class ApplicantTest
     public void testGlobalId()
     {
         assertEquals(2, Applicant.globalID);
-
         new Applicant("Grace", "Hopper");
         assertEquals(3, Applicant.globalID);
     }
