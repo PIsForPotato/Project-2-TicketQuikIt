@@ -83,8 +83,8 @@ Everything initially specified in our Minimum Viable Product (MVP) spec is funct
     - Normal case: Returns Applicant's clearance level
     - Bad Input: Returns null if clearance is invalid
   -   Event's addApplicant() require new test cases that account for clearance level.
-    -   Normal Case: Adding an Applicant with a clearance higher than an Event's security
-    -   Bad Input: Adding an Applicant with a clearance lower than an Event's security
+    - Normal Case: Adding an Applicant with a clearance higher than an Event's security
+    - Bad Input: Adding an Applicant with a clearance lower than an Event's security
 - **Who does what? Which team member owns each remaining item.**
   - Clearance level testing: Makayla Irwin
   - Event adding implementation: Alex Zhao, Lehiem Seyoum
