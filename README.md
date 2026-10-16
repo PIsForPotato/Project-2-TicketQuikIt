@@ -39,10 +39,10 @@ Applicant
 - Add hashCode(), aligning with overriden equals()
 - getFirstName() and getLastName() return null if their respective values, firstName and lastName, are null. Used to update test plan.
 
-###Changes to LinkedChain class
+### Changes to LinkedChain class
 As of the current version, LinkedChain has not been changed.
 
-###Updates to Unknowns
+### Updates to Unknowns
 The following unknowns have been addressed
 - "The ID field for Applicants should increment with each newly created Applicant and the total count should be kept track of; it is currently unknown how this will be achieved"
   - globalID system (a public static int) resolves the incrementing ID feature of Applicant
@@ -51,7 +51,7 @@ The following unknowns have been addressed
 - "How a single linked list class will be able to store and handle two different classes inside"
   - A single Linked List can store and handle two different classes by using generics. 
 
-###What Doesn't Work Yet
+### What Doesn't Work Yet
 - The implementation of the stretch goal of clearance levels is still unknown.
 - Not available
 
