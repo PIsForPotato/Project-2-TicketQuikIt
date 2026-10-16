@@ -19,41 +19,45 @@ JUnit testing is done using the 'CS2-Support' package as provided by the CS 2114
 ## Reflection
 ### Changes to Specification
 
-General
+**General**
 - Fixed various typos including missing parentheses, missing return types, missing parameters, faulty big O notations, and incorrect exception handling. 
 
-New EventManager
+**New EventManager**
 - Split original Menu class into Menu and EventManager class to better divide responsibilities. EventManager has the field eventList and the method checkApplicantsEvent(int id) that originally belonged to Menu
 - EventManager additionally includes a getEventList() and findEvent(String title) with O(1) and O(n), respectively
 - Included test cases for EventManager's new methods.
 
-Menu
+**Menu**
 - Added private helper method isNumeric() to Menu, used for verifying Strings as a number, updated "Where Validation Lives" accordingly
 - Add an EventManager object as a field for Menu
+- Split Menu's mainMenuPrompt processes into private methods of addApplicantProcess(), checkApplicantProcess(), and distributeTicketsProcess() for readability. 
 
-Event
+**Event**
 - Redefine countApplicant(int id) to iterate through the LinkedChain instead of using count(T anEntry); this is to better use ID values
 - Add hashCode(), aligning with overriden equals()
+- Add toString() method
 
-Applicant
-- Add hashCode(), aligning with overriden equals()
+**Applicant**
 - getFirstName() and getLastName() return null if their respective values, firstName and lastName, are null. Used to update test plan.
+- Add hashCode(), aligning with overriden equals()
+- Add toString() method
 
 ### Changes to LinkedChain class
 As of the current version, LinkedChain has not been changed.
 
 ### Updates to Unknowns
 The following unknowns have been addressed
-- "The ID field for Applicants should increment with each newly created Applicant and the total count should be kept track of; it is currently unknown how this will be achieved"
+- **"The ID field for Applicants should increment with each newly created Applicant and the total count should be kept track of; it is currently unknown how this will be achieved"**
   - globalID system (a public static int) resolves the incrementing ID feature of Applicant
-- "How a function will check through all of the event queues and identify whether a specific applicant is present based on the applicant ID"
+- **"How a function will check through all of the event queues and identify whether a specific applicant is present based on the applicant ID"**
   - A function can check through all event queues and identify specific individuals by keeping track of the events queues in an array and iterating through each individual event to search for an ID as needed. EventManager's checkApplicantsEvent(int id) implements this.
-- "How a single linked list class will be able to store and handle two different classes inside"
-  - A single Linked List can store and handle two different classes by using generics. 
+- **"How a single linked list class will be able to store and handle two different classes inside"**
+  - A single Linked List can store and handle two different classes by using generics.
+- **How to implement a clearance level within our code (how and where it would be appropriate to add it) to meet our stretch goal**
+  - Clearance level is stored on Applicants and checked against a security level stored on Events before an Applicant is added to an Event.
 
 ### What Doesn't Work Yet
-- The implementation of the stretch goal of clearance levels is still unknown.
-- Not available
+Everything initially specified in our MVP spec is functional. Outside of our MVP, the stretch goal of allowing the user to crete and manage new Event objects is unimplemented. 
 
 ## Next Steps
 - Not available
