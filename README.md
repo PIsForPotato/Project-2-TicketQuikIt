@@ -56,10 +56,10 @@ The following unknowns have been addressed
 - **How to implement a clearance level within our code (how and where it would be appropriate to add it) to meet our stretch goal**
   - Clearance level is stored on Applicants and checked against a security level stored on Events before an Applicant is added to an Event.
 
-### What Doesn't Work Yet
+### What Doesn't Work Yet FINISHED, the following is only left in for documentation)
 Everything initially specified in our Minimum Viable Product (MVP) spec is functional. Outside of our MVP, the stretch goal of allowing the user to create and manage new Event objects is unimplemented. There is currently no way for the user to edit Event objects at all via the main
 
-## Next Steps
+## Next Steps (FINISHED, the following is only left in for documentation)
 - **What is left to finish the MVP? The remaining features and fixes, in the order you will do them.**
   - The MVP is currently finished. All methods and features listed in the spec and scope function. 
 - **Which stretch goals will you attempt? The ones from your scope you are committing to, and the ones you are dropping.**
@@ -100,4 +100,6 @@ Everything initially specified in our Minimum Viable Product (MVP) spec is funct
 | LinkedChainTest | Nandini Duggaraju | Wrote, revised, completed, GenAI-assisted |
 
 **GenAI Note**: As of the current version, GenAI was used to generate test cases for the classes.
+
+## System Diagram
 

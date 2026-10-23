@@ -1,5 +1,6 @@
 package ticketquikit;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 // -------------------------------------------------------------------------
@@ -37,7 +38,7 @@ public class Menu
             "----------------------------------------------------------");
         String firstName = firstNamePrompt();
         String lastName = lastNamePrompt();
-        int clearance = clearanceLevelPrompt();
+        int clearance = clearanceSecurityLevelPrompt();
         Applicant newApplicant = new Applicant(firstName, lastName, clearance);
         while (active)
         {
@@ -88,44 +89,84 @@ public class Menu
     {
         boolean delete = false;
         Event event = null;
+        ArrayList<Event> eventList = eventManager.getEventList();
 
-        while (event == null)
+        if (eventList.size() != 0)
         {
-            System.out.println(
-                "----------------------------------------------------------");
-            String title = eventTitlePrompt();
-            event = eventManager.findEvent(title);
 
-            if (event == null)
+            while (event == null)
             {
-                System.out.println("Please input a valid title.");
-            }
-            else
-            {
-                Applicant[] ticketWinners = event.getTicketWinners();
+                System.out.println(
+                    "----------------------------------------------------------");
+                String title = eventTitlePrompt();
+                event = eventManager.findEvent(title);
 
-                if (ticketWinners.length == 0)
+                if (event == null)
                 {
-                    System.out.println("No Winners!");
+                    System.out.println("Please input a valid title.");
                 }
                 else
                 {
-                    for (int i = 0; i < ticketWinners.length; i++)
+                    Applicant[] ticketWinners = event.getTicketWinners();
+
+                    if (ticketWinners.length == 0)
                     {
-                        System.out.println(
-                            "Winner #" + (i + 1) + " is "
-                                + ticketWinners[i].getFirstName() + " "
-                                + ticketWinners[i].getLastName()
-                                + " with an ID of " + ticketWinners[i].getID());
+                        System.out.println("No Winners!");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < ticketWinners.length; i++)
+                        {
+                            System.out.println(
+                                "Winner #" + (i + 1) + " is "
+                                    + ticketWinners[i].getFirstName() + " "
+                                    + ticketWinners[i].getLastName()
+                                    + " with an ID of "
+                                    + ticketWinners[i].getID());
+                        }
+                    }
+
+                    delete = deleteTicketWinnersPrompt();
+                    if (delete)
+                    {
+                        event.deleteTicketWinners();
                     }
                 }
-
-                delete = deleteTicketWinnersPrompt();
-                if (delete)
-                {
-                    event.deleteTicketWinners();
-                }
             }
+        }
+        else
+        {
+            System.out.println("There are currently no Events.");
+
+        }
+    }
+
+
+    private void addEventProcess()
+    {
+        boolean active = true;
+
+        while (active)
+        {
+            System.out.println(
+                "----------------------------------------------------------");
+            String eventTitle = eventTitlePrompt();
+            int eventCapacity = eventCapacityPrompt();
+            int clearance = clearanceSecurityLevelPrompt();
+
+            boolean added =
+                eventManager.addEvent(eventTitle, eventCapacity, clearance);
+
+            if (added)
+            {
+                System.out.println("Successful event addition!");
+            }
+            else
+            {
+                System.out.println("Failed event addition");
+            }
+            active = redoActionPrompt();
+
         }
     }
 
@@ -158,7 +199,7 @@ public class Menu
                 "----------------------------------------------------------\n"
                     + "What do you want to do?\n" + "0 - Add Applicant\n"
                     + "1 - Check Applicant\n" + "2 - Distribute Event Tickets\n"
-                    + "3 - Quit");
+                    + "3 - Add Event\n" + "4 - Quit");
             System.out.print("Enter choice: ");
 
             try
@@ -191,8 +232,14 @@ public class Menu
                 break;
 
             case 3:
+                addEventProcess();
+                mainMenuPrompt();
+                break;
+
+            case 4:
                 quit();
                 break;
+
             default:
                 System.out.println("Please input a valid integer.");
                 mainMenuPrompt();
@@ -276,30 +323,65 @@ public class Menu
 
     // ----------------------------------------------------------
     /**
+     * Prompts the user for a event capacity
+     * 
+     * @return int of event capacity
+     */
+    public int eventCapacityPrompt()
+    {
+        int eventCapacity = -1;
+
+        while (eventCapacity == -1)
+        {
+            System.out.print("Enter event capacity: ");
+
+            try
+            {
+                eventCapacity = Integer.parseInt(scanner.nextLine());
+                if (0 >= eventCapacity)
+                {
+                    System.out.println("Please input a valid event capacity.");
+                    eventCapacity = -1;
+                }
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Please input a valid event capacity.");
+            }
+        }
+
+        return eventCapacity;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
      * Prompts the user for a clearance level
      * 
      * @return int of clearance level
      */
-    public int clearanceLevelPrompt()
+    public int clearanceSecurityLevelPrompt()
     {
         int clearance = -1;
 
         while (clearance == -1)
         {
-            System.out.print("Enter clearance level: ");
+            System.out.print("Enter clearance/security level: ");
 
             try
             {
                 clearance = Integer.parseInt(scanner.nextLine());
                 if (0 >= clearance)
                 {
-                    System.out.println("Please input a valid clearance level.");
+                    System.out.println(
+                        "Please input a valid clearance/security level.");
                     clearance = -1;
                 }
             }
             catch (NumberFormatException e)
             {
-                System.out.println("Please input a valid clearance level.");
+                System.out
+                    .println("Please input a valid clearance/security level.");
             }
         }
 
@@ -436,7 +518,7 @@ public class Menu
     public Event addApplicantToEventPrompt()
     {
         int choice = -1;
-        Event[] eventList = eventManager.getEventList();
+        ArrayList<Event> eventList = eventManager.getEventList();
         Event returnEvent = null;
 
         while (choice == -1)
@@ -445,38 +527,46 @@ public class Menu
                 "----------------------------------------------------------\n"
                     + "Which event do you want to add to?\n" + "0 - Quit");
 
-            for (int i = 0; i < eventList.length; i++)
+            if (eventList.size() != 0)
             {
-                System.out.println(
-                    i + 1 + " - " + eventList[i].getEventTitle()
-                        + "( Security Level: " + eventList[i].getSecurity()
-                        + ")");
-            }
-            System.out.print("Enter choice: ");
+                for (int i = 0; i < eventList.size(); i++)
+                {
+                    System.out.println(
+                        i + 1 + " - " + eventList.get(i).getEventTitle()
+                            + "( Security Level: "
+                            + eventList.get(i).getSecurity() + ")");
+                }
+                System.out.print("Enter choice: ");
 
-            try
-            {
-                choice = Integer.parseInt(scanner.nextLine());
-                if (choice < 0 || choice > eventList.length)
+                try
+                {
+                    choice = Integer.parseInt(scanner.nextLine());
+                    if (choice < 0 || choice > eventList.size())
+                    {
+                        System.out.println("Please input a valid integer.");
+                        choice = -1;
+                    }
+                    else if (choice == 0)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        returnEvent = eventList.get(choice - 1);
+                        System.out.println(
+                            "Adding applicant to "
+                                + returnEvent.getEventTitle());
+                    }
+                }
+                catch (NumberFormatException e)
                 {
                     System.out.println("Please input a valid integer.");
                     choice = -1;
                 }
-                else if (choice == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    returnEvent = eventList[choice - 1];
-                    System.out.println(
-                        "Adding applicant to " + returnEvent.getEventTitle());
-                }
             }
-            catch (NumberFormatException e)
-            {
-                System.out.println("Please input a valid integer.");
-                choice = -1;
+            else {
+                System.out.println("There are currently no Events.");
+                choice = 0;   
             }
         }
 
@@ -505,9 +595,8 @@ public class Menu
      */
     public static void main(String[] args)
     {
-        Event[] eventArray = { new Event("Event 1", 1, 1),
-            new Event("Event 2", 5, 1), new Event("Event 3", 10, 3) };
-        EventManager eventManager = new EventManager(eventArray);
+        ArrayList<Event> eventList = new ArrayList<Event>();
+        EventManager eventManager = new EventManager(eventList);
         Menu ticketQuikIt = new Menu(eventManager);
         ticketQuikIt.mainMenuPrompt();
     }

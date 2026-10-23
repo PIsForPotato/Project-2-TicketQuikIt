@@ -2,6 +2,10 @@ package ticketquikit;
 
 import student.TestCase;
 
+// -------------------------------------------------------------------------
+/**
+ *  Tests LinkeChain
+ */
 public class LinkedChainTest
     extends TestCase
 
@@ -9,6 +13,7 @@ public class LinkedChainTest
     // ~ Fields ................................................................
     private LinkedChain<String> chain;
 
+    // ~ Constructors ..........................................................
 
     // ~Public Methods ........................................................
     public void setUp()
@@ -17,6 +22,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests isEmpty and size
+     */
     public void testIsEmptyAndSize()
     {
         assertTrue(chain.isEmpty());
@@ -31,6 +40,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests add
+     */
     public void testAdd()
     {
         assertTrue(chain.add("A"));
@@ -46,6 +59,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests adding null
+     */
     public void testAddNull()
     {
         try
@@ -62,6 +79,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests adding to end
+     */
     public void testAddToEnd()
     {
         assertTrue(chain.addToEnd("A"));
@@ -75,6 +96,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests adding to end on an empty chain
+     */
     public void testAddToEndEmpty()
     {
         chain.addToEnd("A");
@@ -85,6 +110,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests adding null to end
+     */
     public void testAddToEndNull()
     {
         try
@@ -100,7 +129,10 @@ public class LinkedChainTest
         assertTrue(chain.isEmpty());
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests removing
+     */
     public void testRemove()
     {
         assertNull(chain.remove());
@@ -122,6 +154,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests removing a specific entry
+     */
     public void testRemoveEntry()
     {
         chain.addToEnd("A");
@@ -145,7 +181,10 @@ public class LinkedChainTest
         assertEquals(0, chain.size());
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests removing empty entry
+     */
     public void testRemoveEntryEmpty()
     {
         assertFalse(chain.remove("A"));
@@ -153,7 +192,10 @@ public class LinkedChainTest
         assertTrue(chain.isEmpty());
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests removing non-existent entry
+     */
     public void testRemoveEntryNotFound()
     {
         chain.addToEnd("A");
@@ -164,7 +206,10 @@ public class LinkedChainTest
         assertEquals(2, chain.size());
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests removing duplicate
+     */
     public void testRemoveDuplicate()
     {
         chain.addToEnd("A");
@@ -177,6 +222,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests clear
+     */
     public void testClear()
     {
         chain.addToEnd("A");
@@ -190,7 +239,10 @@ public class LinkedChainTest
         assertNull(chain.remove());
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests clearing an empty chain
+     */
     public void testClearEmpty()
     {
         chain.clear();
@@ -199,7 +251,10 @@ public class LinkedChainTest
         assertEquals(0, chain.size());
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests get
+     */
     public void testGet()
     {
         chain.addToEnd("A");
@@ -211,7 +266,10 @@ public class LinkedChainTest
         assertEquals("C", chain.get(2));
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests getting invalid index
+     */
     public void testGetInvalidIndex()
     {
         try
@@ -247,7 +305,10 @@ public class LinkedChainTest
         }
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests contains
+     */
     public void testContains()
     {
         assertFalse(chain.contains("A"));
@@ -262,7 +323,10 @@ public class LinkedChainTest
         assertFalse(chain.contains(null));
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests count
+     */
     public void testCount()
     {
         assertEquals(0, chain.count("A"));
@@ -279,6 +343,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests toArray
+     */
     public void testToArray()
     {
         chain.addToEnd("A");
@@ -294,7 +362,10 @@ public class LinkedChainTest
         assertEquals("C", result[2]);
     }
 
-
+    // ----------------------------------------------------------
+    /**
+     * tests toArray with an input that is a larger array
+     */
     public void testToArrayLargerArray()
     {
         chain.addToEnd("A");
@@ -314,6 +385,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests toArray with an input that is an empty array
+     */
     public void testToArrayEmpty()
     {
         String[] values = new String[2];
@@ -324,6 +399,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests toArray with an input that is null
+     */
     public void testToArrayNull()
     {
         try
@@ -338,6 +417,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests toArray with an input that is a smaller array
+     */
     public void testToArrayTooSmall()
     {
         chain.addToEnd("A");
@@ -355,6 +438,10 @@ public class LinkedChainTest
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * tests toString
+     */
     public void testToString()
     {
         assertEquals("[]", chain.toString());

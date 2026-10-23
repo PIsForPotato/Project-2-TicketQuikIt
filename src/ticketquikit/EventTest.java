@@ -11,6 +11,7 @@ import student.TestCase;
 public class EventTest extends TestCase
 {
     private Event event;
+    private Event secureEvent;
     private Applicant applicant1;
     private Applicant applicant2;
     private Applicant applicant3;
@@ -22,9 +23,10 @@ public class EventTest extends TestCase
     {
         Applicant.globalID = 0;
         event = new Event("Concert", 2, 1);
+        secureEvent = new Event("Secure Concert", 2, 2);
         applicant1 = new Applicant("John", "Smith", 1);
-        applicant2 = new Applicant("Jane", "Doe", 1);
-        applicant3 = new Applicant("Alex", "Brown", 1);
+        applicant2 = new Applicant("Jane", "Doe", 2);
+        applicant3 = new Applicant("Alex", "Brown", 3);
     }
 
 
@@ -39,6 +41,8 @@ public class EventTest extends TestCase
         Event anotherEvent = new Event("Festival", 5, 1);
         assertEquals("Festival", anotherEvent.getEventTitle());
         assertEquals(5, anotherEvent.getEventCapacity());
+        assertEquals(1, anotherEvent.getSecurity());
+        assertEquals(2, secureEvent.getSecurity());
     }
 
 
@@ -54,6 +58,21 @@ public class EventTest extends TestCase
         assertEquals(2, event.countApplicant(0));
         assertEquals(1, event.countApplicant(1));
     }
+    
+    /**
+     * Tests adding an applicant to the event while considering clearance levels
+     */
+    public void testAddApplicantClearance()
+    {
+        assertFalse(secureEvent.addApplicant(applicant1));
+        assertTrue(secureEvent.addApplicant(applicant2));
+        assertTrue(secureEvent.addApplicant(applicant3));
+
+        assertEquals(0, secureEvent.countApplicant(0));
+        assertEquals(1, secureEvent.countApplicant(1));
+        assertEquals(1, secureEvent.countApplicant(1));
+    }
+
 
 
     /**
@@ -258,7 +277,7 @@ public class EventTest extends TestCase
 
         assertFalse(event.hashCode() == anotherEvent.hashCode());
     }
-
+    
     // ----------------------------------------------------------
     /**
      * Tests toString.

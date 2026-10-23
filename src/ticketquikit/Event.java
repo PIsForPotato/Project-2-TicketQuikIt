@@ -13,7 +13,7 @@ public class Event
     private int eventCapacity;
     private int security;
     private LinkedChain<Applicant> applicants;
-   
+
     /**
      * Constructs an Event with a title and a ticket capacity.
      *
@@ -82,8 +82,7 @@ public class Event
         {
             return applicants.addToEnd(applicant);
         }
-        System.out
-            .println("Failed to add this Applicant; clearance too low.");
+        System.out.println("Failed to add this Applicant; clearance too low.");
         return false;
     }
 

@@ -1,5 +1,6 @@
 package ticketquikit;
 
+import java.util.ArrayList;
 import student.TestCase;
 
 // -------------------------------------------------------------------------
@@ -15,8 +16,8 @@ public class EventManagerTest
 {
     private EventManager manager;
     private EventManager emptyManager;
-    private Event[] eventArray = { new Event("Event 1", 1, 1),
-        new Event("Event 2", 5, 1), new Event("Event 3", 10, 3) };
+    private ArrayList<Event> eventList = new ArrayList<Event>();
+    
 
     // ----------------------------------------------------------
     /**
@@ -24,30 +25,47 @@ public class EventManagerTest
      */
     public void setUp()
     {
-        manager = new EventManager(eventArray);
-        emptyManager = new EventManager(new Event[0]);
+        eventList.add(new Event("Event 1", 1, 1));
+        eventList.add(new Event("Event 2", 5, 1));
+        eventList.add(new Event("Event 3", 10, 3));
+        manager = new EventManager(eventList);
+        emptyManager = new EventManager(new ArrayList<Event>());
     }
-
+    
     // ----------------------------------------------------------
     /**
      * Tests getEventList
      */
     public void testGetEventList()
     {
-        for(int i=0; i < manager.getEventList().length; i++) {
-            assertEquals(eventArray[i], manager.getEventList()[i]);
+        for(int i=0; i < manager.getEventList().size(); i++) {
+            assertEquals(eventList.get(i), manager.getEventList().get(i));
         }
         
-        assertEquals(0, emptyManager.getEventList().length);
+        assertEquals(0, emptyManager.getEventList().size());
     }
+    
+    
+    // ----------------------------------------------------------
+    /**
+     * Tests addEvent
+     */
+    public void testAddEvent()
+    {
+        assertTrue(emptyManager.addEvent("ABC", 1, 2));
+        assertFalse(emptyManager.addEvent(null, 1, 2));
+        assertFalse(emptyManager.addEvent("ABC", 0, 2));
+        assertFalse(emptyManager.addEvent("ABC", 1, 0));
+    }
+
     
     // ----------------------------------------------------------
     /**
      * Tests findEvent
      */
     public void testFindEvent() {
-        assertEquals(eventArray[0], manager.findEvent("Event 1"));
-        assertEquals(eventArray[1], manager.findEvent("Event 2"));
+        assertEquals(eventList.get(0), manager.findEvent("Event 1"));
+        assertEquals(eventList.get(1), manager.findEvent("Event 2"));
         assertNull(manager.findEvent("Event 4"));
     }
     
@@ -62,8 +80,8 @@ public class EventManagerTest
             new Applicant("John", "Doe", 1);
         }
         Applicant applicant3 = new Applicant("John", "Doe", 1);
-        eventArray[0].addApplicant(applicant3);
-        eventArray[1].addApplicant(applicant3);
+        eventList.get(0).addApplicant(applicant3);
+        eventList.get(1).addApplicant(applicant3);
         
         assertEquals(2, manager.checkApplicantsEvent(2).size());
         assertEquals(0, manager.checkApplicantsEvent(3).size());

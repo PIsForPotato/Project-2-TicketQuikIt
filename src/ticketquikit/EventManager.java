@@ -1,4 +1,5 @@
 package ticketquikit;
+import java.util.ArrayList;
 
 // -------------------------------------------------------------------------
 /**
@@ -11,7 +12,7 @@ package ticketquikit;
 public class EventManager
 {
     // ~ Fields ................................................................
-    private Event[] eventList;
+    private ArrayList<Event> eventList;
 
     // ~ Constructors ..........................................................
     /**
@@ -19,7 +20,7 @@ public class EventManager
      * 
      * @param eventList
      */
-    public EventManager(Event[] eventList)
+    public EventManager(ArrayList<Event> eventList)
     {
         this.eventList = eventList;
     }
@@ -32,9 +33,28 @@ public class EventManager
      * @return event array
      */
 
-    public Event[] getEventList()
+    public ArrayList<Event> getEventList()
     {
         return eventList;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Add a new event.
+     * @param eventTitle
+     * @param eventCapacity
+     * @param security
+     * @return true if successfully added
+     */
+    public boolean addEvent(String eventTitle, int eventCapacity, int security)
+    {
+        if (eventTitle==null || eventCapacity<=0 || security <=0) {
+            return false;
+        }
+        Event newEvent = new Event(eventTitle, eventCapacity, security);
+        eventList.add(newEvent);
+        return true;
     }
 
 
@@ -47,11 +67,11 @@ public class EventManager
      */
     public Event findEvent(String title)
     {
-        for (int i = 0; i < eventList.length; i++)
+        for (int i = 0; i < eventList.size(); i++)
         {
-            if (eventList[i].getEventTitle().equals(title))
+            if (eventList.get(i).getEventTitle().equals(title))
             {
-                return eventList[i];
+                return eventList.get(i);
             }
         }
         return null;
@@ -70,11 +90,11 @@ public class EventManager
     {
         LinkedChain<Event> returnLinkedChain = new LinkedChain<Event>();
 
-        for (int i = 0; i < eventList.length; i++)
+        for (int i = 0; i < eventList.size(); i++)
         {
-            for (int j = 0; j < eventList[i].countApplicant(id); j++)
+            for (int j = 0; j < eventList.get(i).countApplicant(id); j++)
             {
-                returnLinkedChain.add(eventList[i]);
+                returnLinkedChain.add(eventList.get(i));
             }
         }
         return returnLinkedChain;
