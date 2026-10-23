@@ -113,6 +113,7 @@ Everything initially specified in our Minimum Viable Product (MVP) spec is funct
 | EventManagerTest | Alex Zhao | Wrote, revised, completed |
 | LinkedChain | CS 2114 Staff | Wrote, revised, completed |
 | LinkedChainTest | Nandini Duggaraju | Wrote, revised, completed, GenAI-assisted |
+| README and Repository Formatting/Editing | Alex Zhao | Wrote, revised, completed |
 
 **GenAI Note**: As of the current version, GenAI was used to generate test cases for the classes.
 
