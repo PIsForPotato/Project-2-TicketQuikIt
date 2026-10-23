@@ -2,6 +2,21 @@
 
 TicketQuikIt is a ticket queue managing program. It allows users to add applicants to ticket queues for various events and to retrieve the winning applicants on a first come first serve basis. 
 
+## Installation and Setup
+The device or platform that you are running TicketQuikIt on must be able to run Java. 
+After Java is set up, you can run the following command in terminal to clone this repository. 
+
+```
+git clone https://github.com/PIsForPotato/Project-2-TicketQuikIt
+```
+
+This should include the ticketquikit package setup necessary to run. 
+
+### Zip file alternative
+A zip file of the project is included in this repository. 
+
+For the case of Eclipse (the IDE where this project was built), one can import this project via "File" -> "Import..." -> "Existing Projects into Workspace" and selecting a downloaded TicketQuikIt.zip.
+
 ### Compiling and Running in Eclipse
 To compile and run the program in the Eclipse IDE, run Menu.java as a "Java Application" because it contains the main method necessary to initialize the program loop. 
 Any other IDE should similarly run Menu.java to start the main method loop. 
