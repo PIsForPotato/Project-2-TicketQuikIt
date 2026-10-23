@@ -102,4 +102,5 @@ Everything initially specified in our Minimum Viable Product (MVP) spec is funct
 **GenAI Note**: As of the current version, GenAI was used to generate test cases for the classes.
 
 ## System Diagram
+<img width="847" height="447" alt="System Diagram" src="https://github.com/user-attachments/assets/99cd96d0-0914-4b42-8c98-1ece58deeb81" />
 
